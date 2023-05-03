@@ -4,7 +4,7 @@
  * A memoized function is a function that will never be called twice with the same input. Instead it will return a cache value.
  */
 
-export const memoize = (fn) => {
+export var memoize = (fn) => {
   var cache = [];
 
   return function (...args) {
