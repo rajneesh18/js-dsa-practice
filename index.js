@@ -1,31 +1,54 @@
+import { sleep } from './leetcode/2621-Sleep.js';
+
 var TimeLimitedCache = function () {
-  (expired = 0), (total = 0), (data = {});
+  this.data = new Map();
 };
 
-TimeLimitedCache.prototype.set = (key, value, expired) => {
-  data[key] = { value: value, expired: expired };
-  total += 1;
-};
-TimeLimitedCache.prototype.get = (key) => {
-  if (data[key] != undefined) {
+TimeLimitedCache.prototype.set = function (key, val, expiredAt) {
+  if (!this.data?.has(key)) {
+    this.data.set(key, {
+      value: val,
+      expiredAt: Date.now() + expiredAt,
+    });
     return true;
   }
+  this.data.set(key, {
+    value: val,
+    expiredAt: Date.now() + expiredAt,
+  });
   return false;
 };
 
-TimeLimitedCache.prototype.count = function () {
-  return total;
+TimeLimitedCache.prototype.get = function (key) {
+  if (this.data.has(key)) {
+    if (this.data.get(key).expiredAt > Date.now()) {
+      return this.data.get(key).value;
+    }
+    this.data.delete(key);
+  }
+
+  return -1;
 };
 
-/**
- * Your TimeLimitedCache object will be instantiated and called as such:
- * var obj = new TimeLimitedCache()
- * obj.set(1, 42, 1000); // false
- * obj.get(1) // 42
- * obj.count() // 1
- */
+TimeLimitedCache.prototype.count = function () {
+  let size = this.data.size > 0 ? true : false;
+  let count = 0;
+  if (size) {
+    this.data.forEach((key, value) => {
+      if (value.expiredAt > Date.now()) {
+        count++;
+      }
+    });
+  }
+  return count;
+};
 
-var obj = new TimeLimitedCache();
-obj.set(1, 42, 1000);
-console.log(obj.get(1));
-console.log(obj.count());
+const limitCatch = new TimeLimitedCache();
+limitCatch.set(2, 50, 1000);
+console.log(limitCatch.count(), 'before');
+console.log(limitCatch.get(2), 'get');
+console.log(limitCatch.count(), 's');
+
+// sleep(500).then(() => {
+//   console.log(limitCatch.count(), 'after');
+// });
