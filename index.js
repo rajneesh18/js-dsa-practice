@@ -1,15 +1,31 @@
-import { TimeLimitedCache } from './leetcode/2622-CacheWithTimelimit.js';
-import { sleep } from './leetcode/2621-Sleep.js';
+var arr = function () {
+  this.data = [
+    19, 10, 3, 7, 9, 8, 5, 2, 1, 17, 16, 14, 12, 18, 6, 13, 11, 20, 4, 15,
+  ];
+};
 
-const limitCatch = new TimeLimitedCache();
-limitCatch.set(2, 50, 1000);
-console.log(limitCatch.count(), 'before-1st');
-console.log(limitCatch.get(2), 'get');
-console.log(limitCatch.count(), 'before-2nd');
+arr.prototype.snail = function (rowsCount, colsCount) {
+  let snailArr = new Array();
+  if (rowsCount * colsCount != this.data.length) return snailArr;
 
-sleep(6000)
-  .then(() => {
-    console.log(limitCatch.get(2), 'internalget');
-    console.log(limitCatch.count(), 'internalcount');
-  })
-  .catch((err) => console.log(err));
+  let i = 0;
+  for (let c = 0; c < colsCount; c++) {
+    let isOdd = c & 1;
+    if (!isOdd) {
+      for (let r = 0; r < rowsCount; r++) {
+        console.log(r, c, this.data[i++], 'odd');
+        // snailArr[r][c] = this.data[i];
+      }
+    } else {
+      for (let r = rowsCount - 1; r >= 0; r--) {
+        console.log(r, c, this.data[i++], 'even');
+        // snailArr[r][c] = this.data[i];
+      }
+    }
+  }
+
+  return snailArr;
+};
+
+const myarr = new arr();
+console.log(myarr.snail(5, 4)); // [[1,2,3,4]]h
