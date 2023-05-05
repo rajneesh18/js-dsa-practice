@@ -8,22 +8,28 @@ arr.prototype.snail = function (rowsCount, colsCount) {
   let snailArr = new Array();
   if (rowsCount * colsCount != this.data.length) return snailArr;
 
-  let i = 0;
-  for (let c = 0; c < colsCount; c++) {
-    let isOdd = c & 1;
-    if (!isOdd) {
-      for (let r = 0; r < rowsCount; r++) {
-        console.log(r, c, this.data[i++], 'odd');
-        // snailArr[r][c] = this.data[i];
-      }
-    } else {
-      for (let r = rowsCount - 1; r >= 0; r--) {
-        console.log(r, c, this.data[i++], 'even');
-        // snailArr[r][c] = this.data[i];
+  for (let r = 0; r < rowsCount; r++) {
+    let initialRowIndex = [];
+    let evenStart = r;
+    let oddStart = rowsCount * 2 - 1 - r;
+
+    for (let c = 0; c < colsCount; c++) {
+      let isOdd = c & 1;
+      if (isOdd == 1) {
+        initialRowIndex.push(oddStart);
+        oddStart += rowsCount * 2;
+      } else {
+        initialRowIndex.push(evenStart);
+        evenStart += rowsCount * 2;
       }
     }
-  }
 
+    let row = [];
+    for (let key of initialRowIndex) {
+      row.push(this.data[key]);
+    }
+    snailArr.push(row);
+  }
   return snailArr;
 };
 
