@@ -6,8 +6,7 @@ export var flat = (arr, n) => {
     if (!Array.isArray(key)) {
       flatarr.push(key);
     } else {
-      let data = flat(key, n - 1);
-      flatarr = [...flatarr, ...data];
+      flatarr.push(...flat(key, n - 1));
     }
   }
 
