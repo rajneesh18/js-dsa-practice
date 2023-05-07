@@ -1,13 +1,7 @@
-import { flat } from './leetcode/2625-FlattenDeeplyNestedArray.js';
+import { createCounter } from './leetcode/2665-CounterII.js';
 
-let arr = [
-  1,
-  2,
-  3,
-  [4, 5, 6],
-  [7, 8, [9, 10, 11], 12],
-  [4, 5, 6],
-  [13, 14, 15],
-];
+const counter = createCounter(5);
 
-console.log(flat(arr, 2));
+console.log(counter.increment());
+console.log(counter.reset());
+console.log(counter.decrement());
