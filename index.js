@@ -1,7 +1,11 @@
-import { createCounter } from './leetcode/2665-CounterII.js';
+import { jsonStringify } from './leetcode/2633.JsonStringify.js';
 
-const counter = createCounter(5);
-
-console.log(counter.increment());
-console.log(counter.reset());
-console.log(counter.decrement());
+let obj = {
+  a: 1,
+  b: null,
+  sum: () => {
+    return 'sss';
+  },
+  arr: [1, 2, 3],
+};
+console.log(jsonStringify(obj));
