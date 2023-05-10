@@ -16,7 +16,7 @@
  */
 export var twoSum = (nums, target) => {
   let hash = new Map();
-  for (let i = 0; i < hash.length; i++) {
+  for (let i = 0; i < nums.length; i++) {
     const req = target - nums[i];
     if (hash.has(req)) {
       return [hash.get(req), i];
