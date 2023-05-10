@@ -1,11 +1,6 @@
-import { jsonStringify } from './leetcode/2633.JsonStringify.js';
+import { twoSum } from './leetcode/1.TwoSum.js';
 
-let obj = {
-  a: 1,
-  b: null,
-  sum: () => {
-    return 'sss';
-  },
-  arr: [1, 2, 3],
-};
-console.log(jsonStringify(obj));
+let arr = [2, 7, 10, 15];
+let target = 9;
+
+console.log(twoSum(arr, target));

@@ -38,3 +38,15 @@ export var jsonStringify = (object) => {
     return '{' + items.join(',') + '}';
   }
 };
+
+/**
+ * let obj = {
+ *  a: 1,
+ *  b: null,
+ *  sum: () => {
+ *    return 'sss';
+ *  },
+ *  arr: [1, 2, 3],
+ * };
+ * console.log(jsonStringify(obj));
+ */
