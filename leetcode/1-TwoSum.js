@@ -15,13 +15,16 @@
  * @return { numbers[] }
  */
 export var twoSum = (nums, target) => {
-  let hash = new Map();
-  for (let i = 0; i < nums.length; i++) {
-    const req = target - nums[i];
-    if (hash.has(req)) {
-      return [hash.get(req), i];
+  let end = 0;
+  let set = new Map();
+
+  while (end !== nums.length) {
+    if (set.has(target - nums[end])) {
+      return [set.get(target - nums[end]), end];
     }
 
-    hash.set(nums[i], i);
+    set.set(nums[end], end);
+
+    end++;
   }
 };
