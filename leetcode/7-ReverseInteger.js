@@ -4,6 +4,7 @@
  */
 
 /**
+ * Solution - 1
  * @param {number} x
  * @return {number}
  */
@@ -21,4 +22,4 @@ var reverse = function (x) {
   return Number(x);
 };
 
-console.log(reverse(-120));
+console.log(reverse(-120)); // -21
