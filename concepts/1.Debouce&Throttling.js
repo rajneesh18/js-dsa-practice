@@ -7,26 +7,24 @@
  * It ensures that one notification is made for an event that fires multiple times.
  */
 
-var debounce = function (fn, t) {
+var debounce = function (context, fn, t) {
   let timer;
-  return function (...args) {
-    if (timer) clearTimeout(timer);
 
+  return (...args) => {
+    if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
-      fn(...args);
+      fn.apply(context, args);
     }, t);
   };
 };
 
-/** ***************************************************** */
-
-var throttle = function (fn, t) {
+var throttle = function (context, fn, t) {
   let lastArgs;
   let shouldCall = true;
 
   var execute = () => {
     if (shouldCall && lastArgs) {
-      fn(...lastArgs);
+      fn.apply(context, lastArgs);
       lastArgs = null;
       shouldCall = false;
 
@@ -42,3 +40,26 @@ var throttle = function (fn, t) {
     execute();
   };
 };
+
+var username = document.getElementById('username');
+let sendEmail = document.getElementById('sendEmail');
+
+let handleInput = debounce(
+  this,
+  (e) => {
+    console.log('debouce');
+  },
+  1000
+);
+
+let handleClick = throttle(
+  this,
+  (e) => {
+    console.log('throttle');
+  },
+  1000
+);
+
+username.addEventListener('input', handleInput);
+
+sendEmail.addEventListener('click', handleClick);
