@@ -7,38 +7,38 @@
  * It ensures that one notification is made for an event that fires multiple times.
  */
 
-let timer;
-let inp = document.getElementById('root');
+var debounce = function (fn, t) {
+  let timer;
+  return function (...args) {
+    if (timer) clearTimeout(timer);
 
-let debouce = (fn, delay) => {
-  if (timer) {
-    clearTimeout(timer);
-  }
-
-  timer = setTimeout(() => fn(), delay);
-};
-
-const searchInput = () => {
-  debouce(() => {
-    console.log(`Fetching result for..  ${inp.value}`);
-  }, 1200);
+    timer = setTimeout(() => {
+      fn(...args);
+    }, t);
+  };
 };
 
 /** ***************************************************** */
 
-let apiCalled;
-let throttle = (fn, delay) => {
-  if (apiCalled) return;
-  apiCalled = true;
+var throttle = function (fn, t) {
+  let lastArgs;
+  let shouldCall = true;
 
-  setTimeout(() => {
-    fn();
-    apiCalled = false;
-  }, delay);
-};
+  var execute = () => {
+    if (shouldCall && lastArgs) {
+      fn(...lastArgs);
+      lastArgs = null;
+      shouldCall = false;
 
-const sendEmail = () => {
-  throttle(() => {
-    console.log('Sending Email', count++);
-  }, 500);
+      setTimeout(() => {
+        shouldCall = true;
+        execute();
+      }, t);
+    }
+  };
+
+  return function (...args) {
+    lastArgs = args;
+    execute();
+  };
 };
